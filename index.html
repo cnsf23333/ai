@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>双机 AI 从入门到精通精简指南</title>
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --border-color: #334155;
+            --primary-color: #38bdf8;
+            --accent-color: #f43f5e;
+            --success-color: #22c55e;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.5;
+            margin: 0;
+            padding: 15px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            font-size: 1.8rem;
+        }
+        .subtitle {
+            text-align: center;
+            color: var(--text-sub);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+        
+        /* 按钮与卡片容器 */
+        .community-card {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(244, 63, 94, 0.15));
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .action-btn {
+            display: inline-block;
+            color: #0f172a;
+            font-weight: bold;
+            font-size: 0.95rem;
+            padding: 8px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        .action-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+        .btn-qq {
+            background-color: var(--primary-color);
+        }
+        .btn-pan {
+            background-color: var(--success-color);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 4px;
+            margin-top: 25px;
+            font-size: 1.3rem;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        /* 流程图 */
+        .flow-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            text-align: center;
+            margin: 12px 0;
+        }
+        .flow-node {
+            background: #090d16;
+            border: 1px solid var(--primary-color);
+            border-radius: 6px;
+            padding: 8px;
+            flex: 1;
+            min-width: 120px;
+            font-size: 0.85rem;
+        }
+        .flow-arrow {
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        /* 表格 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+            background-color: var(--card-bg);
+            font-size: 0.85rem;
+        }
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 8px 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #090d16;
+            color: var(--primary-color);
+        }
+        tr:nth-child(even) {
+            background-color: #172033;
+        }
+
+        /* 高亮框 */
+        .highlight {
+            background-color: rgba(56, 189, 248, 0.1);
+            border-left: 3px solid var(--primary-color);
+            padding: 8px 12px;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        .warning-box {
+            background-color: rgba(244, 63, 94, 0.1);
+            border-left: 3px solid var(--accent-color);
+            padding: 8px 12px;
+            margin: 10px 0;
+            font-size: 0.9rem;
+        }
+        .tag {
+            display: inline-block;
+            background: #334155;
+            color: var(--primary-color);
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: bold;
+        }
+        .tag-recommend {
+            background: var(--success-color);
+            color: #0f172a;
+        }
+        .tag-flagship {
+            background: var(--accent-color);
+            color: #ffffff;
+        }
+        ul {
+            padding-left: 18px;
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+        p {
+            margin: 6px 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>双机 AI 从入门到精通（精简版）</h1>
+    <p class="subtitle">原理、采集卡、硬件盒子对比及 YOLO 模型全解析</p>
+
+    <!-- 交流群与网盘入口 -->
+    <div class="community-card">
+        <strong>🔥 资源获取与技术支持</strong>
+        <div class="btn-group">
+            <a href="https://qm.qq.com/q/AzL45h7bzy" target="_blank" class="action-btn btn-qq">👉 点击加入 QQ 交流群</a>
+            <a href="https://hyyx.ren/" target="_blank" class="action-btn btn-pan">📁 点击进入网盘下载</a>
+        </div>
+    </div>
+
+    <!-- 一、原理与安全性 -->
+    <h2 class="section-title">一、双机 AI 原理与安全性</h2>
+    <div class="card">
+        <p><strong>原理：</strong> 采集卡抓取主机游戏画面送入副机 ➔ 副机 AI 识别人物目标 ➔ 将移动坐标发给硬件盒子 ➔ 盒子控制主机鼠标拉枪锁头。</p>
+        
+        <div class="flow-container">
+            <div class="flow-node"><strong>1. 主机</strong><br>运行游戏</div>
+            <span class="flow-arrow">➔ 图像 ➔</span>
+            <div class="flow-node"><strong>2. 采集卡</strong><br>推流抓屏</div>
+            <span class="flow-arrow">➔ 传输 ➔</span>
+            <div class="flow-node"><strong>3. 副机</strong><br>AI 推理算坐标</div>
+            <span class="flow-arrow">➔ 指令 ➔</span>
+            <div class="flow-node"><strong>4. 鼠标盒子</strong><br>物理模拟移动</div>
+        </div>
+
+        <p><strong>安全性：</strong> <strong>0 读写内存、0 软件注入</strong>。采集卡可刷写固件修改 EDID 复制显示器信息；高级盒子支持“透传”（将真实鼠标 VID/PID 透传给主机），主机只识别为正常鼠标。这是目前安全性最高的作弊方案。</p>
+        <p><strong>优缺点：</strong> 优点是物理级安全且跨游戏通用；缺点是只有单自瞄，在某些游戏里收益不如透视大。</p>
+        <div class="warning-box">
+            <strong>关于封号：</strong> 不会封十年。短封（1~30天）多因拉枪参数太反人类触发了服务器端的行为轨迹检测，非软件被检测。
+        </div>
+    </div>
+
+    <!-- 二、硬件准备与选型 -->
+    <h2 class="section-title">二、双机 AI 硬件准备与选型</h2>
+    <div class="card">
+        <h3>1. 主机（游戏 PC）</h3>
+        <p>流畅运行目标游戏即可。</p>
+
+        <h3>2. 采集卡选型对比</h3>
+        <p>采集卡负责将主机画面实时高帧率复制传输至副机：</p>
+
+        <Image src="image_agent_tag_3264180704700223093" alt="圆刚 575 (Live Gamer 4K 2.1 GC575) 内置采集卡" caption="圆刚 575 PCIe HDMI 2.1 旗舰采集卡" />
+
+        <table>
+            <thead>
+                <tr>
+                    <th>采集卡型号/类型</th>
+                    <th>接口类型</th>
+                    <th>刷新率支持与延时</th>
+                    <th>改EDID/特点</th>
+                    <th>选型与使用建议</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="tag tag-flagship">4K 顶级旗舰</span><br><strong>圆刚 575 (GC575)</strong></td>
+                    <td>PCIe 3.0 x4<br>(HDMI 2.1)</td>
+                    <td>顶级帧率 (4K 144Hz / 2K 240Hz/360Hz)<br>极低延迟</td>
+                    <td>支持改 EDID<br>支持 VRR/HDR</td>
+                    <td><strong>高端/2K240Hz 顶配首选：</strong> 具备 HDMI 2.1 接口带宽，适合顶级高刷新率显示器玩家，性能完爆旧款。</td>
+                </tr>
+                <tr>
+                    <td><span class="tag tag-recommend">主流性价比</span><br><strong>圆刚 573 (GC573)</strong></td>
+                    <td>PCIe 2.0 x4<br>(HDMI 2.0)</td>
+                    <td>高帧率 (1K 240Hz)<br>超低延迟 (&lt;5ms左右)</td>
+                    <td>支持改 EDID<br>复制显示器信息</td>
+                    <td><strong>台式机性价比首选：</strong> 修改 EDID 极其方便稳定。需副机主板有空余 PCIex8 插槽。</td>
+                </tr>
+                <tr>
+                    <td><strong>圆刚 553G2</strong></td>
+                    <td>USB 3.2 / 雷电4</td>
+                    <td>高帧率<br>低延迟</td>
+                    <td>支持改 EDID</td>
+                    <td><strong>笔记本副机首选：</strong> 适配无 PCIe 插槽的笔记本副机，需确保副机有雷电 4 或 USB 3.2 接口。</td>
+                </tr>
+                <tr>
+                    <td><strong>普通百元采集卡</strong></td>
+                    <td>USB 3.0</td>
+                    <td>中低帧率 (1K 60Hz~144Hz)<br>延迟中等 (15~30ms)</td>
+                    <td>通常不支持改 EDID</td>
+                    <td><strong>低预算入门选型：</strong> 适用于 1080P 144Hz 或更低刷新率屏幕，预算百元左右可选。</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 style="margin-top: 15px;">3. 副机（AI 推理电脑）与软件</h3>
+        <p>显卡<strong>必须用 N 卡（推荐 3060 起步）</strong>，显卡越强推理越快。其他配置别选太差够用就可以
+
+        <h3>4. 主流鼠标盒子对比</h3>
+        <p>个人观点：其实我觉得透传不透传 意义只是在于每个人用的盒子的特征不一样，不透传的设备无非也是大家用的同一个“鼠标”玩游戏而已。
+            透传后只是吧这部分风险分散开罢了然后什么真透传假透传就是描述符可能有些地方截断了而已 但是都是标准hid设备。
+            所以说拉不拉我都感觉跟盒子没太大关系 除非是说明确说认定这个设备就是作弊设备 被禁止不给用
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>盒子名称</th>
+                    <th>参考价格</th>
+                    <th>性能与透传特点</th>
+                    <th>选型建议</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Makcu</strong></td>
+                    <td>40~60 元</td>
+                    <td>支持透传，入门级配置</td>
+                    <td>预算极低可选，但芯片性能弱，不推荐。</td>
+                </tr>
+                <tr>
+                    <td><strong>KMBOX</strong></td>
+                    <td>120~200 元</td>
+                    <td>有a、b+、net，支持透传</td>
+                    <td>第一个做这类产品的。</td>
+                </tr>
+                <tr>
+                    <td><span class="tag tag-recommend">推荐方案</span><br><strong>dhzbox</strong></td>
+                    <td>可选产品类别较多</td>
+                    <td>高阶透传技术，使用开发板成本透明</td>
+                    <td><strong>主力推荐：</strong> 低延迟，超高性价比稳健选择。</td>
+                </tr>
+                <tr>
+                    <td><strong>Ferrum</strong></td>
+                    <td>1000左右</td>
+                    <td>成本不超过100人民币</td>
+                    <td>人手频率上报时序和软件控制的上报时序不均衡被检测封过，听说作者自己都知道但是没修</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 三、YOLO 模型全解析 -->
+    <h2 class="section-title">三、YOLO 模型规格（s/n/m）与版本全解析</h2>
+    <div class="card">
+        <h3>1. 模型规格尺寸（n / s / m / l / x）区别</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>规格</th>
+                    <th>体积/参数</th>
+                    <th>速度 (FPS)</th>
+                    <th>准确率</th>
+                    <th>适用副机与场景</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Nano (n)</strong></td>
+                    <td>极小 (3~7MB)</td>
+                    <td>⚡⚡⚡ 极快</td>
+                    <td>⭐⭐ 一般</td>
+                    <td>低端显卡（GTX 1060 / 40HX）首选，追求极致低延迟。</td>
+                </tr>
+                <tr>
+                    <td><strong>Small (s)</strong></td>
+                    <td>较小 (14~25MB)</td>
+                    <td>⚡⚡ 非常快</td>
+                    <td>⭐⭐⭐⭐ 优秀</td>
+                    <td><strong>自瞄黄金规格：</strong> 兼顾速度与准确率，中端显卡首选。</td>
+                </tr>
+                <tr>
+                    <td><strong>Medium (m)</strong></td>
+                    <td>中等 (40~80MB)</td>
+                    <td>⚡ 较快</td>
+                    <td>⭐⭐⭐⭐⭐ 极高</td>
+                    <td>RTX 3070/4060Ti 以上推荐，远距离露头识别极佳。</td>
+                </tr>
+                <tr>
+                    <td><strong>Large / Extra</strong></td>
+                    <td>庞大 (>100MB)</td>
+                    <td>🐢 较慢</td>
+                    <td>⭐⭐⭐⭐⭐ 完美</td>
+                    <td>延迟偏高，非顶级显卡（4080/4090）不建议自瞄使用。</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 style="margin-top: 15px;">2. YOLO 各版本区别（含 YOLOv26）</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>版本</th>
+                    <th>推理性能</th>
+                    <th>识别精度</th>
+                    <th>特点与建议</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>YOLOv5</strong></td>
+                    <td>⚡⚡⚡ 极快</td>
+                    <td>⭐⭐⭐ 中等</td>
+                    <td>生态极成熟，对老显卡非常友好。</td>
+                </tr>
+                <tr>
+                    <td><strong>YOLOv8</strong></td>
+                    <td>⚡⚡ 优秀</td>
+                    <td>⭐⭐⭐⭐ 高</td>
+                    <td><strong>目前主流：</strong> 露头与复杂小目标识别显著增强。</td>
+                </tr>
+                <tr>
+                    <td><strong>YOLOv10/v11</strong></td>
+                    <td>⚡⚡ 快</td>
+                    <td>⭐⭐⭐⭐⭐ 极高</td>
+                    <td>消除 NMS 延迟，框体贴合度高，适合 RTX 40 系显卡。</td>
+                </tr>
+                <tr>
+                    <td><span class="tag tag-recommend">新旗舰</span><br><strong>YOLOv26</strong></td>
+                    <td>⚡⚡⚡ 极快</td>
+                    <td>⭐⭐⭐⭐⭐ 顶级</td>
+                    <td><strong>新一代自瞄神器：</strong> 兼具 v5 的超低延迟与 v11 的极高识别率，露头遮挡识别极强。</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="highlight">
+            <strong>什么是 TensorRT (TRT)？</strong> TensorRT 是 NVIDIA 官方推出的高性能深度学习推理加速引擎。通过将通用模型（如 `.pt` 或 `.onnx`）优化并导出为针对特定 GPU 硬件定制的 <strong>`.engine` 格式</strong>，能够进行算子融合与量化加速，将 AI 图像识别延迟降低至 <strong>1~5 毫秒</strong>，是实现极致自瞄响应的核心技术。
+        </div>
+    </div>
+
+    <!-- 底部群链接与网盘 -->
+    <div class="community-card">
+        <strong>🚀 获取最新资源、模型与调参技巧</strong>
+        <div class="btn-group">
+            <a href="https://qm.qq.com/q/AzL45h7bzy" target="_blank" class="action-btn btn-qq">👉 点击加入 QQ 交流群</a>
+            <a href="https://hyyx.ren/" target="_blank" class="action-btn btn-pan">📁 点击进入网盘下载</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
