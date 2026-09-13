@@ -194,6 +194,22 @@
             margin-bottom: 15px;
         }
 
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 15px;
+    /* 关键设置：添加平滑过渡动画（时长0.3秒） */
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* 鼠标悬浮 (Hover) 触发的效果 */
+.card:hover {
+    transform: translateY(-4px); /* 向上浮动 4 像素 */
+    border-color: var(--primary-color); /* 边框变为亮蓝色 */
+    box-shadow: 0 8px 24px rgba(56, 189, 248, 0.15); /* 添加亮蓝色微妙光晕阴影 */
+}
         /* 流程图样式 */
         .flow-container {
             display: grid;
