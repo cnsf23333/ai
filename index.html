@@ -71,7 +71,7 @@
             margin: 0;
         }
 
-        /* 悬浮吸顶胶囊导航栏 (像参考图片样式) */
+        /* 悬浮吸顶胶囊导航栏 */
         .sticky-nav-wrapper {
             position: sticky;
             top: 15px;
@@ -163,7 +163,7 @@
             margin: 35px 0 15px 0;
             padding-bottom: 8px;
             border-bottom: 1px solid var(--border-color);
-            scroll-margin-top: 75px; /* 防遮挡偏移 */
+            scroll-margin-top: 75px;
         }
         .section-title::before {
             content: "";
@@ -192,24 +192,58 @@
             border-radius: 10px;
             padding: 18px;
             margin-bottom: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 24px rgba(56, 189, 248, 0.15);
         }
 
-.card {
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 18px;
-    margin-bottom: 15px;
-    /* 关键设置：添加平滑过渡动画（时长0.3秒） */
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-}
+        /* 时间轴样式（用于历史发展） */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            margin: 15px 0;
+            border-left: 2px solid var(--border-color);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 22px;
+            padding-left: 15px;
+        }
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -21px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            box-shadow: 0 0 8px var(--primary-color);
+        }
+        .timeline-date {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+        .timeline-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+        .timeline-desc {
+            font-size: 0.85rem;
+            color: var(--text-sub);
+        }
 
-/* 鼠标悬浮 (Hover) 触发的效果 */
-.card:hover {
-    transform: translateY(-4px); /* 向上浮动 4 像素 */
-    border-color: var(--primary-color); /* 边框变为亮蓝色 */
-    box-shadow: 0 8px 24px rgba(56, 189, 248, 0.15); /* 添加亮蓝色微妙光晕阴影 */
-}
         /* 流程图样式 */
         .flow-container {
             display: grid;
@@ -347,15 +381,15 @@
 
 <div class="container">
     <header>
-        
         <h1>双机 AI 从入门到精通</h1>
-        <p class="subtitle">原理、选型、架构工作流及 YOLO 模型全景指南</p>
+        <p class="subtitle">原理、精确演进历史、选型、架构工作流及 YOLO 模型全景指南</p>
     </header>
 
     <!-- 吸顶悬浮导航栏 -->
     <div class="sticky-nav-wrapper">
         <nav class="sticky-nav">
             <a href="#sec-principle" class="nav-item">什么是双机AI</a>
+            <a href="#sec-history" class="nav-item">发展历史</a>
             <a href="#sec-capture" class="nav-item">采集卡</a>
             <a href="#sec-subpc" class="nav-item">副机硬件</a>
             <a href="#sec-box" class="nav-item">鼠标盒子</a>
@@ -401,8 +435,43 @@
         </div>
     </div>
 
-    <!-- 二、硬件选型指南 -->
-    <div class="section-title">二、硬件选型指南（采集卡、副机与盒子）</div>
+    <!-- 二、双机 AI 发展历史（含精确年份） -->
+    <div id="sec-history" class="section-title">二、双机 AI 精确演进历程</div>
+    <div class="card">
+        <p style="font-size: 0.88rem; color: var(--text-sub); margin-bottom: 15px;">
+            双机 AI 并非凭空诞生，其发展轨迹与通用计算机视觉技术演进及游戏反作弊的强力对抗密切相关：
+        </p>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">2017 年（实际更早） · 萌芽期：传统单机色块识别</div>
+                <div class="timeline-title">基于 HSV/RGB 色彩阈值分割（按键精灵、大漠插件、简单 C++ OpenCV 脚本）</div>
+                <div class="timeline-desc">《守望先锋》等游戏大火后，早期开发者通过识别敌方轮廓高亮（如红色/紫色）或血条颜色实现自动瞄准。优点是算法极度简单，缺点是复杂背景（如红墙、红烟雾）误判率极高，且在单机运行易被 Hook 截屏检测。</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2020 年 · 突破期：YOLO 神经网络全面落地</div>
+                <div class="timeline-title">YOLOv5 发布标志着深度学习正式取代传统图像处理</div>
+                <div class="timeline-desc">2020 年 6 月 Ultralytics 开源 YOLOv5，实时目标检测性能大幅提升。AI 开始像人类视觉一样精确识别“人体、头部、姿态”，即使敌人遮挡、蹲伏或处于暗光环境下也能高精度框选，算法准确率实现质的飞跃。</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2021 年 - 2022 年 · 转折期：内核级反作弊全面封杀单机架构</div>
+                <div class="timeline-title">Vanguard / ACE 内核驱动扫描升级</div>
+                <div class="timeline-desc">随着 Valorant 引入 Ring-0 级别的 Vanguard 反作弊，单机运行 AI 软件面临严峻封号潮：应用层 Hook 截屏被封、虚拟鼠标驱动（如 Interception/Logitech 驱动 API）被全面拉黑。开发者被迫探索“物理解耦”路径。</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2023 年 · 成熟期：采集卡 + 串口硬件盒子生态爆发</div>
+                <div class="timeline-title">4K/高帧采集卡普及与 KMBOX / dhzbox 等透传硬件成熟</div>
+                <div class="timeline-desc">PCIe 低延迟采集卡普及破解了视频传输瓶颈（早期甚至是使用moonlight串流来传输画面）；单片机硬件盒子实现真正的 HID 描述符物理透传。主机只认识新增的标准 USB 鼠标，“单机注入”正式全面转向“双机零注入”物理隔离时代。</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2024 年 - 2026 年 · 现阶段：极低延迟、行为拟真与高级对抗</div>
+                <div class="timeline-title">TensorRT 深度优化 + YOLOv10/v11/v26 与算法拟人化</div>
+                <div class="timeline-desc">自21年开始使用TRT以来模型推理延迟降低至 1~3ms；核心对抗点从“硬件隐蔽”全面转向“行为轨迹（Behavioral Analysis）”。引入 PID 控制、贝塞尔曲线、高斯噪声拟合等拟人化算法，配合 PID/VID 动态透传，防止服务端统计学检测。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 三、硬件选型指南 -->
+    <div class="section-title">三、硬件选型指南（采集卡、副机与盒子）</div>
     
     <!-- 1. 采集卡选型 -->
     <div id="sec-capture" class="card sub-target">
@@ -451,6 +520,9 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="warning-box">
+            <strong>关于发射器和obs：</strong> 大规模禁止obs大概是在三角洲“obs吸附爆发”之后，此后发射器开始出现，但是我没有用过也不推荐使用这些
         </div>
     </div>
 
@@ -520,8 +592,8 @@
         </div>
     </div>
 
-    <!-- 三、软件工作流与搭建逻辑 -->
-    <div id="sec-workflow" class="section-title">三、AI 软件工作流与新手搭建逻辑</div>
+    <!-- 四、软件工作流与搭建逻辑 -->
+    <div id="sec-workflow" class="section-title">四、AI 软件工作流与新手搭建逻辑</div>
     <div class="grid-2">
         <div class="card">
             <h3 style="margin-top: 0; font-size: 1.05rem; color: var(--primary-color);">1. AI 软件 5 步调度流程</h3>
@@ -572,8 +644,8 @@
         </div>
     </div>
 
-    <!-- 四、YOLO 模型规格与版本 -->
-    <div id="sec-yolo" class="section-title">四、YOLO 模型规格与版本全解析</div>
+    <!-- 五、YOLO 模型规格与版本 -->
+    <div id="sec-yolo" class="section-title">五、YOLO 模型规格与版本全解析</div>
     <div class="card">
         <div class="grid-2">
             <div>
@@ -591,7 +663,7 @@
                         <tbody>
                             <tr>
                                 <td><strong>Nano (n)</strong></td>
-                               <td>⚡⚡⚡ 极快</td>
+                                <td>⚡⚡⚡ 极快</td>
                                 <td>⭐⭐ 一般</td>
                                 <td>入门显卡（如 1060/40HX），追求低延迟。</td>
                             </tr>
@@ -661,8 +733,8 @@
         </div>
     </div>
 
-    <!-- 五、总结 -->
-    <div id="sec-summary" class="section-title">五、系统总结</div>
+    <!-- 六、总结 -->
+    <div id="sec-summary" class="section-title">六、系统总结</div>
     <div class="card">
         <p>双机 AI 本质上是典型的计算机视觉全链路系统：</p>
         
